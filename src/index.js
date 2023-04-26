@@ -1,4 +1,5 @@
 const axios = require('axios');
+// import axios from "axios";
 /**
  * @readonly
  * @enum {number}
@@ -18,21 +19,29 @@ const InchChains = {
 	SEFULIAN: 1337,
 };
 
+const instance = axios.default.create({
+	baseURL: 'https://api.1inch.io/v5.0/',
+	headers: {
+		common: {
+			accept: 'application/json'
+		}
+	}
+});
+
+
 class OneInchApi {
 	#chainId = 1337;
 	#baseUrl = `${baseUrl}`;
 
 	constructor(chainId) {
 		this.#chainId = chainId;
-		axios.defaults.headers.common['accept'] = 'application/json';
-
 	}
 
 	//check api health
 	healtcheck = async () => {
 		console.log('checkChain', this.#chainId);
 		try {
-			let res = await axios.get(`${this.#baseUrl}${this.#chainId}/healthcheck`);
+			let res = await instance.get(`${this.#chainId}/healthcheck`);
 			return res.data;
 		} catch (error) {
 			if (error.response) {
@@ -53,8 +62,8 @@ class OneInchApi {
 	//approveSpender
 	approveSpender = async () => {
 		try {
-			let res = await axios.get(
-				`${this.#baseUrl}${this.#chainId}/approve/spender`
+			let res = await instance.get(
+				`${this.#chainId}/approve/spender`
 			);
 			return res.data;
 		} catch (error) {
@@ -76,8 +85,8 @@ class OneInchApi {
 	//approveTransaction
 	approveTransaction = async (tokenAddress, amount) => {
 		try {
-			let res = await axios.get(
-				`${this.#baseUrl}${this.#chainId}/approve/transaction`,
+			let res = await instance.get(
+				`${this.#chainId}/approve/transaction`,
 				{
 					params: { tokenAddress, amount },
 				}
@@ -102,8 +111,8 @@ class OneInchApi {
 	//allowance
 	approveAllowance = async (tokenAddress, walletAddress) => {
 		try {
-			let res = await axios.get(
-				`${this.#baseUrl}${this.#chainId}/approve/allowance`,
+			let res = await instance.get(
+				`${this.#chainId}/approve/allowance`,
 				{
 					params: { tokenAddress, walletAddress },
 				}
@@ -128,8 +137,8 @@ class OneInchApi {
 	//Liquidity sources
 	liquiditySources = async () => {
 		try {
-			let res = await axios.get(
-				`${this.#baseUrl}${this.#chainId}/liquidity-sources`
+			let res = await instance.get(
+				`${this.#chainId}/liquidity-sources`
 			);
 			return res.data.protocols;
 		} catch (error) {
@@ -151,7 +160,7 @@ class OneInchApi {
 	//tokens
 	tokens = async () => {
 		try {
-			let res = await axios.get(`${this.#baseUrl}${this.#chainId}/tokens`);
+			let res = await instance.get(`${this.#chainId}/tokens`);
 			return res.data.tokens;
 		} catch (error) {
 			if (error.response) {
@@ -172,7 +181,7 @@ class OneInchApi {
 	//presets
 	presets = async () => {
 		try {
-			let res = await axios.get(`${this.#baseUrl}${this.#chainId}/presets`);
+			let res = await instance.get(`${this.#chainId}/presets`);
 			return res.data;
 		} catch (error) {
 			if (error.response) {
@@ -218,7 +227,7 @@ class OneInchApi {
 	 */
 	quote = async (fromTokenAddress, toTokenAddress, amount, options = {}) => {
 		try {
-			let res = await axios.get(`${this.#baseUrl}${this.#chainId}/quote`, {
+			let res = await instance.get(`${this.#chainId}/quote`, {
 				params: Object.assign(
 					{ fromTokenAddress, toTokenAddress, amount },
 					options
@@ -285,7 +294,7 @@ class OneInchApi {
 		options = {}
 	) => {
 		try {
-			let res = await axios.get(`${this.#baseUrl}${this.#chainId}/swap`, {
+			let res = await instance.get(`${this.#chainId}/swap`, {
 				params: Object.assign(
 					{ fromTokenAddress, toTokenAddress, amount, fromAddress, slippage },
 					options
