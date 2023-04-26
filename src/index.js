@@ -18,14 +18,14 @@ const InchChains = {
 	SEFULIAN: 1337,
 };
 
-axios.defaults.headers.common['accept'] = 'application/json';
-
 class OneInchApi {
 	#chainId = 1337;
 	#baseUrl = `${baseUrl}`;
 
 	constructor(chainId) {
 		this.#chainId = chainId;
+		axios.defaults.headers.common['accept'] = 'application/json';
+
 	}
 
 	//check api health
