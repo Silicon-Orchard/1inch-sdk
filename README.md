@@ -18,16 +18,16 @@
 # Installing
 Using npm:
 ```console
-npm i @normalizex/1inch-api
+npm i https://github.com/Silicon-Orchard/1inch-sdk
 ```
 Using yarn:
 ```console
-yarn add @normalizex/1inch-api
+yarn add https://github.com/Silicon-Orchard/1inch-sdk
 ```
 
 ***
 # Documentation
-* You can find full documentation in the folder [docs/README.md](./docs/README.md) 
+* You can find full documentation in the folder [docs/README.md](./docs/README.md)
 ***
 # Usage:
 ES6:
@@ -43,9 +43,9 @@ const Inch = new OneInch(InchV4Chains.Ethereum);
 Browser:
 ```html
 <script type="text/javascript">
-const OneInch = new OneInch(OneInchChains.Ethereum);
+	const OneInch = new OneInch(OneInchChains.Ethereum);
 
-console.log(OneInch)//Object
+	console.log(OneInch)//Object
 </script>
 ```
 
@@ -80,7 +80,7 @@ Inch.approveTransaction(BUSD).then(data => {
 			to: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
 			value: '0'
 		}
-	*/
+	 */
 });
 
 Inch.healtcheck().then(data => {
@@ -98,7 +98,7 @@ Inch.liquiditySources().then(data => {
 			}
 			...AND MORE ITEMS...
 		]
-	*/
+	 */
 });
 
 Inch.presets().then(data => {
@@ -127,7 +127,7 @@ Inch.presets().then(data => {
 				}
 			]
 		}
-	*/
+	 */
 });
 
 Inch.tokens().then(data => {
@@ -141,8 +141,8 @@ Inch.tokens().then(data => {
 			logoURI: 'https://tokens.1inch.io/0x0a913bead80f321e7ac35285ee10d9d922659cb7.png'
 		},
 		... 284 more items
-	 ] 
-	*/
+	 ]
+	 */
 });
 
 Inch.quote(BUSD, WETH, 50 * 1e18).then(data => {
@@ -167,7 +167,7 @@ Inch.quote(BUSD, WETH, 50 * 1e18).then(data => {
 		protocols: [ [ [Array] ] ],
 		estimatedGas: 252364
 	}
-	*/
+	 */
 });
 ```
 ***

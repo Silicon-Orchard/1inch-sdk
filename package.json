@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
-  "module": "lib/index.mjs",
+  "module": "lib/index.esm.js",
   "scripts": {
     "dev": "nodemon example/index.js",
     "build": "rollup -c",
