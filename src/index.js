@@ -287,7 +287,7 @@ class OneInchApi {
 		try {
 			let res = await instance.get(`${this.#chainId}/swap`, {
 				params: Object.assign(
-					{ fromTokenAddress, toTokenAddress, amount, fromAddress, slippage },
+					{ src: fromTokenAddress, dst: toTokenAddress, amount, from: fromAddress, slippage },
 					options
 				),
 			});
