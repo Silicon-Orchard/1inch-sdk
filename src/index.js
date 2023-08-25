@@ -25,24 +25,27 @@ const instance = axios.default.create({
 		common: {
 			accept: 'application/json',
 			'Cache-Control': 'no-cache',
-			Authorization: "Bearer c9XPccRwDALjWHe8IqkB8r8wxlCHTDGe"
+			// Authorization: "Bearer c9XPccRwDALjWHe8IqkB8r8wxlCHTDGe"
 		},
 	},
 });
 
 class OneInchApi {
 	#chainId = 1337;
+	#instance = '';
 	#baseUrl = `${baseUrl}`;
 
-	constructor(chainId) {
+	constructor(chainId, apiSecret) {
+		instance.defaults.headers.common.Authorization = `Bearer ${apiSecret}`;
 		this.#chainId = chainId;
+		this.#instance = instance;
 	}
 
 	//check api health
 	healtcheck = async () => {
-		console.log('checkChain', this.#chainId);
 		try {
-			let res = await instance.get(`${this.#chainId}/healthcheck`);
+			// console.log(#instance.defaults.headers.common)
+			let res = await this.#instance.get(`${this.#chainId}/healthcheck`);
 			return res.data;
 		} catch (error) {
 			if (error.response) {
@@ -63,7 +66,7 @@ class OneInchApi {
 	//approveSpender
 	approveSpender = async () => {
 		try {
-			let res = await instance.get(`${this.#chainId}/approve/spender`);
+			let res = await this.#instance.get(`${this.#chainId}/approve/spender`);
 			return res.data;
 		} catch (error) {
 			if (error.response) {
@@ -84,9 +87,12 @@ class OneInchApi {
 	//approveTransaction
 	approveTransaction = async (tokenAddress, amount) => {
 		try {
-			let res = await instance.get(`${this.#chainId}/approve/transaction`, {
-				params: { tokenAddress, amount },
-			});
+			let res = await this.#instance.get(
+				`${this.#chainId}/approve/transaction`,
+				{
+					params: { tokenAddress, amount },
+				}
+			);
 			return res.data;
 		} catch (error) {
 			if (error.response) {
@@ -107,7 +113,7 @@ class OneInchApi {
 	//allowance
 	approveAllowance = async (tokenAddress, walletAddress) => {
 		try {
-			let res = await instance.get(`${this.#chainId}/approve/allowance`, {
+			let res = await this.#instance.get(`${this.#chainId}/approve/allowance`, {
 				params: { tokenAddress, walletAddress },
 			});
 			return res.data;
@@ -130,7 +136,7 @@ class OneInchApi {
 	//Liquidity sources
 	liquiditySources = async () => {
 		try {
-			let res = await instance.get(`${this.#chainId}/liquidity-sources`);
+			let res = await this.#instance.get(`${this.#chainId}/liquidity-sources`);
 			return res.data.protocols;
 		} catch (error) {
 			if (error.response) {
@@ -151,7 +157,7 @@ class OneInchApi {
 	//tokens
 	tokens = async () => {
 		try {
-			let res = await instance.get(`${this.#chainId}/tokens`);
+			let res = await this.#instance.get(`${this.#chainId}/tokens`);
 			return res.data.tokens;
 		} catch (error) {
 			if (error.response) {
@@ -172,7 +178,7 @@ class OneInchApi {
 	//presets
 	presets = async () => {
 		try {
-			let res = await instance.get(`${this.#chainId}/presets`);
+			let res = await this.#instance.get(`${this.#chainId}/presets`);
 			return res.data;
 		} catch (error) {
 			if (error.response) {
@@ -218,7 +224,7 @@ class OneInchApi {
 	 */
 	quote = async (fromTokenAddress, toTokenAddress, amount, options = {}) => {
 		try {
-			let res = await instance.get(`${this.#chainId}/quote`, {
+			let res = await this.#instance.get(`${this.#chainId}/quote`, {
 				params: Object.assign(
 					{ fromTokenAddress, toTokenAddress, amount },
 					options
@@ -276,20 +282,11 @@ class OneInchApi {
 	 * @param slippage - min: 0; max: 50; (Percentage)
 	 * @param options - Full info about options you can find in "remarks"
 	 */
-	swap = async (
-		fromTokenAddress,
-		toTokenAddress,
-		amount,
-		fromAddress,
-		slippage,
-		options = {}
-	) => {
+	swap = async (src, dst, amount, from, slippage, options = {}) => {
 		try {
-			let res = await instance.get(`${this.#chainId}/swap`, {
-				params: Object.assign(
-					{ src: fromTokenAddress, dst: toTokenAddress, amount, from: fromAddress, slippage },
-					options
-				),
+			console.log('swap', `${this.#chainId}/swap`);
+			let res = await this.#instance.get(`${this.#chainId}/swap`, {
+				params: Object.assign({ src, dst, amount, from, slippage }, options),
 			});
 			return res.data;
 		} catch (error) {
