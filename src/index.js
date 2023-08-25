@@ -25,7 +25,7 @@ const instance = axios.default.create({
 		common: {
 			accept: 'application/json',
 			'Cache-Control': 'no-cache',
-			Authorization: "c9XPccRwDALjWHe8IqkB8r8wxlCHTDGe"
+			Authorization: "Bearer c9XPccRwDALjWHe8IqkB8r8wxlCHTDGe"
 		},
 	},
 });
