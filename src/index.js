@@ -5,7 +5,7 @@ const axios = require('axios');
  * @enum {number}
  */
 
-const baseUrl = 'https://api.1inch.io/v5.0/';
+const baseUrl = 'https://api.1inch.dev/swap/v5.2/';
 
 const InchChains = {
 	Ethereum: 1,
@@ -20,11 +20,12 @@ const InchChains = {
 };
 
 const instance = axios.default.create({
-	baseURL: 'https://api.1inch.io/v5.0/',
+	baseURL: 'https://api.1inch.dev/swap/v5.2/',
 	headers: {
 		common: {
 			accept: 'application/json',
 			'Cache-Control': 'no-cache',
+			Authorization: "c9XPccRwDALjWHe8IqkB8r8wxlCHTDGe"
 		},
 	},
 });
