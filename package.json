@@ -12,9 +12,9 @@
   "author": "Tareq Aziz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tareq0065/1inch/issues"
+    "url": "https://github.com/Silicon-Orchard/1inch-sdk/issues"
   },
-  "homepage": "https://github.com/tareq0065/1inch#readme",
+  "homepage": "https://github.com/Silicon-Orchard/1inch-sdk/#readme",
   "engines": {
     "node": ">=16.18.1"
   },
